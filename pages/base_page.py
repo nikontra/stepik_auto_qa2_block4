@@ -8,6 +8,7 @@ from .locators import BasePageLocators
 
 
 class BasePage:
+    """Класс для базовых методов"""
     def __init__(self, driver, url):
         self.driver = driver
         self.url = url
@@ -15,17 +16,21 @@ class BasePage:
 
 
     def open(self):
+        """Открывает страницу"""
         self.driver.get(self.url)
 
     def go_to_login_page(self):
+        """Нажимает на кнопку авторизации"""
         login_link = self.driver.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click()
 
     def go_to_basket_page(self):
+        """Нажимает на кнопку корзины"""
         basket_link = self.driver.find_element(*BasePageLocators.BASKET_LINK)
         basket_link.click()
 
     def should_be_login_link(self):
+        """Проверяет наличие кнопки авторизации"""
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not present."
 
     def is_element_present(self, how, what):
@@ -54,6 +59,7 @@ class BasePage:
             return False
 
     def solve_quiz_and_get_code(self):
+        """Вычисляет значение по формуле и подставляет в окно алерта"""
         alert = self.driver.switch_to.alert
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))
@@ -66,3 +72,9 @@ class BasePage:
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def should_be_authorized_user(self):
+        """Проверяет наличие значка авторизованного пользователя"""
+        assert self.is_element_present(
+            *BasePageLocators.USER_ICON), "User icon is not present, probably unauthorised user."
+

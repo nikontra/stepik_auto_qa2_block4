@@ -15,6 +15,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture
 def driver(request):
+    """Фикстура для открытия браузера"""
     browser_name = request.config.getoption('--browser_name')
     language = request.config.getoption('--language')
     options_chrome = ChromeOptions()
@@ -36,6 +37,7 @@ def driver(request):
 
 @pytest.fixture(scope="session")
 def load_config():
+    """Фикстура для файла конфигурации"""
     with open("config.json", "r") as f:
         config = json.load(f)
         return config
