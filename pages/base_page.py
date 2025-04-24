@@ -77,4 +77,3 @@ class BasePage:
         """Проверяет наличие значка авторизованного пользователя"""
         assert self.is_element_present(
             *BasePageLocators.USER_ICON), "User icon is not present, probably unauthorised user."
-
